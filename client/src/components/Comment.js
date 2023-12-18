@@ -16,7 +16,9 @@ const Comment = ({
   const inputRef = useRef(null);
 
   const handleNewComment = () => {
-    //TODO
+    setExpand((prevState) => !prevState);
+    setShowInput(true);
+    console.log("Newcomment");
   };
 
   useEffect(() => {
@@ -24,7 +26,10 @@ const Comment = ({
   });
 
   const onAddComment = () => {
-    //TODO
+    setExpand(true);
+    handleInsertNode(comment.id, input);
+    setShowInput(false);
+    setInput("");
   };
 
   const handleDelete = () => {
@@ -39,13 +44,9 @@ const Comment = ({
               type="text"
               className="inputContainer__input first_input "
               autoFocus
-              value={
-                {
-                  /*TODO*/
-                }
-              }
+              value={input}
               onChange={(e) => {
-                /*TODO*/
+                setInput(e.target.value);
               }}
               placeholder="type..."
             />
@@ -53,11 +54,7 @@ const Comment = ({
             <Action
               className="reply comment"
               type="Comment"
-              handleClick={
-                {
-                  /*TODO*/
-                }
-              }
+              handleClick={onAddComment}
             />
           </>
         ) : (
@@ -80,25 +77,15 @@ const Comment = ({
                 }
               }
             >
-              {
-                {
-                  /*TODO*/
-                }
-              }
+              {comment.name}
             </span>
             <div style={{ display: "flex", marginTop: "5px" }}>
-              {{
-                /*TODO*/
-              } ? (
+              {editMode ? (
                 <>
                   <Action
                     className="reply"
                     type="SAVE"
-                    handleClick={
-                      {
-                        /*TODO*/
-                      }
-                    }
+                    handleClick={onAddComment}
                   />
                   <Action
                     className="reply"
@@ -116,9 +103,7 @@ const Comment = ({
                     className="reply"
                     type={
                       <>
-                        {{
-                          /*TODO*/
-                        } ? (
+                        {expand ? (
                           <UpArrow width="10px" height="10px" />
                         ) : (
                           <DownArrow width="10px" height="10px" />
@@ -126,11 +111,7 @@ const Comment = ({
                         REPLY
                       </>
                     }
-                    handleClick={
-                      {
-                        /*TODO*/
-                      }
-                    }
+                    handleClick={handleNewComment}
                   />
                   <Action
                     className="reply"
@@ -156,35 +137,19 @@ const Comment = ({
       </div>
       <div
         style={{
-          display: {
-            /*TODO*/
-          }
-            ? "block"
-            : "none",
+          display: expand ? "block" : "none",
           paddingLeft: 25,
         }}
       >
-        {{
-          /*TODO*/
-        } && (
+        {showInput && (
           <div className="inputContainer">
             <input
               type="text"
               className="inputContainer__input"
               autoFocus
-              onChange={(e) => {
-                /*TODO*/
-              }}
+              onChange={(e) => setInput(e.target.value)}
             />
-            <Action
-              className="reply"
-              type="REPLY"
-              handleClick={
-                {
-                  /*TODO*/
-                }
-              }
-            />
+            <Action className="reply" type="REPLY" handleClick={onAddComment} />
             <Action
               className="reply"
               type="CANCEL"

@@ -12,16 +12,25 @@ function App() {
 
   const { insertNode, editNode, deleteNode } = useNode();
 
-  const handleInsertNode = () => {
-    //TODO
+  const handleInsertNode = (folderId, item) => {
+    const result = insertNode(commentsData, folderId, item);
+    setCommentsData(result);
   };
 
-  const handleEditNode = () => {
+  const handleEditNode = (folderId, value) => {
     //TODO
+    const result = editNode(commentsData, folderId, value);
+    setCommentsData(result);
   };
 
-  const handleDeleteNode = () => {
+  const handleDeleteNode = (folderId) => {
     //TODO
+    const result = deleteNode(commentsData, folderId);
+    const temp = { ...result };
+    //If it mutates the original object, creating a copy ensures data integrity.
+    //If it returns a new modified copy, creating a copy might be redundant.
+    //deleteNode indeed mutates the orignial object hence need to create a copy
+    setCommentsData(temp);
   };
 
   return (
