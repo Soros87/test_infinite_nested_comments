@@ -26,10 +26,16 @@ const Comment = ({
   });
 
   const onAddComment = () => {
-    setExpand(true);
-    handleInsertNode(comment.id, input);
-    setShowInput(false);
-    setInput("");
+    if (editMode) {
+      handleEditNode(comment.id, inputRef?.current?.innerText);
+      setEditMode(false);
+      console.log(comment);
+    } else {
+      setExpand(true);
+      handleInsertNode(comment.id, input);
+      setShowInput(false);
+      setInput("");
+    }
   };
 
   const handleDelete = () => {
@@ -60,22 +66,10 @@ const Comment = ({
         ) : (
           <>
             <span
-              contentEditable={
-                {
-                  /*TODO*/
-                }
-              }
-              suppressContentEditableWarning={
-                {
-                  /*TODO*/
-                }
-              }
+              contentEditable={editMode}
+              suppressContentEditableWarning={editMode}
               style={{ wordWrap: "break-word" }}
-              ref={
-                {
-                  /*TODO*/
-                }
-              }
+              ref={inputRef}
             >
               {comment.name}
             </span>
@@ -91,9 +85,9 @@ const Comment = ({
                     className="reply"
                     type="CANCEL"
                     handleClick={() => {
-                      {
-                        /*TODO*/
-                      }
+                      if (inputRef.current)
+                        inputRef.current.innerText = comment.name;
+                      setEditMode(false);
                     }}
                   />
                 </>
@@ -117,7 +111,7 @@ const Comment = ({
                     className="reply"
                     type="EDIT"
                     handleClick={() => {
-                      /*TODO*/
+                      setEditMode(true);
                     }}
                   />
                   <Action

@@ -25,6 +25,20 @@ const useNode = () => {
 
   const editNode = (tree, commentId, value) => {
     //TODO
+    if (!tree) {
+      return null;
+    }
+
+    if (tree.id === commentId) {
+      tree.name = value;
+      return tree;
+    }
+
+    tree.items.map((ob) => {
+      return editNode(ob, commentId, value);
+    });
+
+    return { ...tree };
   };
 
   const deleteNode = (tree, commentId) => {
