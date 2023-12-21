@@ -17,13 +17,13 @@ const Comment = ({
 
   const handleNewComment = () => {
     setExpand((prevState) => !prevState);
+
     setShowInput(true);
-    console.log("Newcomment");
   };
 
   useEffect(() => {
-    //TODO
-  });
+    inputRef?.current?.focus();
+  }, [editMode]);
 
   const onAddComment = () => {
     if (editMode) {
@@ -39,7 +39,7 @@ const Comment = ({
   };
 
   const handleDelete = () => {
-    //TODO
+    handleDeleteNode(comment.id);
   };
   return (
     <div>
@@ -117,11 +117,7 @@ const Comment = ({
                   <Action
                     className="reply"
                     type="DELETE"
-                    handleClick={
-                      {
-                        /*TODO*/
-                      }
-                    }
+                    handleClick={handleDelete}
                   />
                 </>
               )}
@@ -148,7 +144,8 @@ const Comment = ({
               className="reply"
               type="CANCEL"
               handleClick={() => {
-                /*TODO*/
+                setShowInput(false);
+                if (!comment?.items?.length) setExpand(false);
               }}
             />
           </div>

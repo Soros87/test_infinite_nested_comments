@@ -24,7 +24,6 @@ const useNode = () => {
   };
 
   const editNode = (tree, commentId, value) => {
-    //TODO
     if (!tree) {
       return null;
     }
@@ -42,8 +41,19 @@ const useNode = () => {
   };
 
   const deleteNode = (tree, commentId) => {
-    //TODO
-    return;
+    if (!tree) {
+      return null;
+    }
+
+    for (let i = 0; i < tree.items.length; i++) {
+      if (tree.items[i].id === commentId) {
+        tree.items.splice(i, 1);
+        return tree;
+      } else {
+        deleteNode(tree.items[i], commentId);
+      }
+    }
+    return tree;
   };
 
   return { insertNode, editNode, deleteNode };
